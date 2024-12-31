@@ -5,6 +5,7 @@ import BlogsBulk from "./pages/BlogsBulk"
 import { FullBlog } from "./pages/FullBlog";
 import { Publish } from "./pages/Publish";
 import { Redirect } from "./components/Redirect";
+import Myblogs from "./pages/MyBlogs";
 
 export default function App() {
   return <BrowserRouter>
@@ -15,6 +16,7 @@ export default function App() {
       <Route path="/blog/bulk" element={<BlogsBulk />} />
       <Route path="/blog" element={<FullBlog />} />
       <Route path="/publish" element={<Publish />} />
+      <Route path="/myblogs" element={<Myblogs />} />
     </Routes>
   </BrowserRouter>
 }

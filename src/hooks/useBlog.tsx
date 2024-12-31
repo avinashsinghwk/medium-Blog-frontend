@@ -7,9 +7,15 @@ export const useBlog = (id: string) => {
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<BlogType>()
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/user/blog/${id}`)
+        axios.get(`${BACKEND_URL}/api/v1/user/blog/${id}`,{
+            headers: {
+                Authorization: localStorage.getItem("mediumBlog_token")
+            }
+        })
             .then(res => {
                 setBlog(res.data.post)
+                setLoading(false)
+            }).catch(e => {
                 setLoading(false)
             })
     }, [id])

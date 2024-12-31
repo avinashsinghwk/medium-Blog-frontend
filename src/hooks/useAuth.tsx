@@ -4,6 +4,8 @@ import { BACKEND_URL } from "../config";
 
 export const useAuth = () => {
     const [auth, setAuth] = useState(false);
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         axios.post(`${BACKEND_URL}/api/v1/user/me`,{},{
             headers: {
@@ -12,7 +14,11 @@ export const useAuth = () => {
         }).then(res => {
             if(res.data.message == "auth passed")
                 setAuth(true)
+                setLoading(false)
+        }).catch(e => {
+            setAuth(false)
+            setLoading(false)
         })
     },[])
-    return auth;
+    return [loading, auth];
 }

@@ -4,17 +4,25 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { FullBlogCard } from "../components/FullBlogCard"
 import { LoaderFullBlog } from "../components/LoaderFullBlog"
 import { useAuth } from "../hooks/useAuth"
+import { useEffect } from "react"
 
 export const FullBlog = () => {
     const navigate = useNavigate()
-    const auth = useAuth()
-    if(!auth){
-        navigate('/signup')
-    }
+    const [authLoading, auth] = useAuth()
+    
+    useEffect(() => {
+            if(auth == false && authLoading == false){
+                navigate('/signup')
+            }
+        }, [authLoading])
+
     const [searchParams] = useSearchParams()
     const id = searchParams.get("id")
     const {loading, blog} = useBlog(id || "")
-    if(loading || blog == undefined){
+    if(authLoading){
+        return <LoaderFullBlog />
+    }
+    else if(loading || blog == undefined){
         return <div>
             <div>
                 <AppBar />

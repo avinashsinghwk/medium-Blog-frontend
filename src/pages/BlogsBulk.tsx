@@ -4,15 +4,25 @@ import { useBlogs } from "../hooks/useBlogs"
 import { SkletonBlogBulk } from "../components/SkletonBlogBulk"
 import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { LoaderFullBlog } from "../components/LoaderFullBlog"
 
 export default function BlogsBulk() {
     const navigate = useNavigate()
-    const auth = useAuth()
-    if(!auth){
-        navigate('/signup')
-    }
+    const [authLoading, auth] = useAuth()
+
+    useEffect(() => {
+        if(auth == false && authLoading == false){
+            navigate('/signup')
+        }
+    }, [authLoading])
+    
     const { loading, blogs } = useBlogs()
-    if (loading) {
+
+    if(authLoading){
+        return <LoaderFullBlog />
+    }
+    else if (loading) {
         return <div>
             <div>
                 <AppBar />

@@ -5,18 +5,25 @@ import { useState } from "react"
 import { postInputType } from "@abhinashsinghwk/mediumblog-zod"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
+import { LoaderFullBlog } from "../components/LoaderFullBlog"
+import { useEffect } from "react"
 
 export const Publish = () => {
     const navigate = useNavigate()
-    const auth = useAuth()
-    if(!auth){
-        navigate('/signup')
-    }
+    const [authLoading, auth] = useAuth()
+
+    useEffect(() => {
+        if(auth == false && authLoading == false){
+            navigate('/signup')
+        }
+    }, [authLoading])
+
     const [data, setData] = useState<postInputType>({
         title: '',
         content: '',
         published: true
     })
+    
     const publishBtnClick = async () => {
         try {
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/blog`, data, {
@@ -34,7 +41,10 @@ export const Publish = () => {
             }
         }
     }
-    return <div className="flex flex-col gap-5">
+    if(authLoading){
+        return <LoaderFullBlog />
+    } else {
+        return <div className="flex flex-col gap-5">
         <div>
             <AppBar />
         </div>
@@ -65,9 +75,7 @@ export const Publish = () => {
                     <button onClick={publishBtnClick} type="button" className=" text-white bg-blue-600 hover:bg-blue-800 font-bold rounded-lg text-base px-10 py-3  ">Publish</button>
                 </div>
             </div>
-
-
-
         </div>
     </div>
+    }
 }
