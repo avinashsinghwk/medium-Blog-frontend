@@ -17,6 +17,7 @@ export const useBlog = (id: string) => {
                 setLoading(false)
             }).catch(e => {
                 setLoading(false)
+                console.log(e)
             })
     }, [id])
     return { loading, blog }

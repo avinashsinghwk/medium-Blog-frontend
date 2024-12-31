@@ -18,6 +18,7 @@ export const useAuth = () => {
         }).catch(e => {
             setAuth(false)
             setLoading(false)
+            console.log(e)
         })
     },[])
     return [loading, auth];
