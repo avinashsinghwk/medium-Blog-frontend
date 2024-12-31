@@ -13,7 +13,7 @@ export const useSpecificBlogs = () => {
             }
         })
             .then(res => { setBlogs(res.data.posts); setLoading(false) })
-            .catch(e => { setLoading(false)})
+            .catch(e => { setLoading(false); console.log(e)})
     }, [])
     return { loading, blogs }
 }
