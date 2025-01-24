@@ -14,6 +14,7 @@ export const SigninForm = () => {
     })
     const [btnActive, setBtnActive] = useState<boolean>(false)
     const [sendingRequest, setSendingRequestn] = useState<boolean>(false);
+    const [passwordVisible, setPasswordVisible] = useState(false)
 
     const navigate = useNavigate();
 
@@ -61,7 +62,7 @@ export const SigninForm = () => {
             <h3 className="font-bold text-sm">Do your have an account? <Link className="underline text-lg" to={"/signup"}>Signup</Link></h3>
         </div>
         <div className="w-full lg:w-1/2 flex flex-col gap-7 items-center justify-center">
-            <InputBox onChange={(e) => {
+            <InputBox passwordVisible={null} setPasswordVisible={null} onChange={(e) => {
                 setSigninInputBody(c => {
                     return {
                         ...c,
@@ -69,7 +70,7 @@ export const SigninForm = () => {
                     }
                 })
             }} id="signinEmailBox" label="Email:" type="email" placeholder="Enter your email" />
-            <InputBox onChange={(e) => {
+            <InputBox passwordVisible={passwordVisible} setPasswordVisible={setPasswordVisible} onChange={(e) => {
                 setSigninInputBody(c => {
                     return {
                         ...c,

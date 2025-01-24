@@ -15,6 +15,8 @@ export const SingupForm = () => {
     })
     const [btnActive, setBtnActive] = useState<boolean>(false)
     const [sendingRequest, setSendingRequestn] = useState<boolean>(false);
+    const [passwordVisible, setPasswordVisible] = useState(false)
+
     const navigate = useNavigate();
 
     function ActiveBtn() {
@@ -63,7 +65,7 @@ export const SingupForm = () => {
             <h3 className="font-bold text-sm">Already have an account? <Link className="underline text-lg" to={"/signin"}>Login</Link></h3>
         </div>
         <div className="w-full lg:w-1/2 flex flex-col gap-7 items-center justify-center">
-            <InputBox onChange={(e) => {
+            <InputBox passwordVisible={null} setPasswordVisible={null} onChange={(e) => {
                 setSignupInputBody(c => {
                     return {
                         ...c,
@@ -71,7 +73,7 @@ export const SingupForm = () => {
                     }
                 })
             }} id="signupEmailBox" label="Email:" type="email" placeholder="Enter your email" />
-            <InputBox onChange={(e) => {
+            <InputBox passwordVisible={null} setPasswordVisible={null} onChange={(e) => {
                 setSignupInputBody(c => {
                     return {
                         ...c,
@@ -79,7 +81,7 @@ export const SingupForm = () => {
                     }
                 })
             }} id="signupNameBox" label="Name:" type="text" placeholder="Enter your name" />
-            <InputBox onChange={(e) => {
+            <InputBox passwordVisible={passwordVisible} setPasswordVisible={setPasswordVisible} onChange={(e) => {
                 setSignupInputBody(c => {
                     return {
                         ...c,
