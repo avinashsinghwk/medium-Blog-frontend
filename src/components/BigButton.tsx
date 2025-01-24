@@ -1,10 +1,11 @@
 interface BigButtonprops{
-    text: string,
-    onClick : ()=>void
+    text: any,
+    onClick : ()=>void,
+    btnActive: boolean
 }
 
-export const BigButton = ({text, onClick}: BigButtonprops) => {
-    return <button onClick={onClick} className="w-full py-2 font-bold text-xl text-white bg-black hover:bg-gray-700">
+export const BigButton = ({text, onClick, btnActive}: BigButtonprops) => {
+    return <button onClick={onClick} className={`flex items-center justify-center w-full py-2 font-bold text-xl text-white ${btnActive ? 'cursor-pointer' : 'cursor-not-allowed'} ${btnActive ? 'bg-black': 'bg-gray-700'}`}>
         {text}
     </button>
 }
