@@ -5,6 +5,8 @@ import { LoaderFullBlog } from "../components/LoaderFullBlog"
 import { useEffect } from "react"
 import { useSpecificBlogs } from "../hooks/useSpecificBlogs"
 import { BlogCard } from "../components/BlogCard"
+import axios from "axios"
+import { BACKEND_URL } from "../config"
 
 export default function Myblogs() {
     const navigate = useNavigate()
@@ -43,7 +45,23 @@ export default function Myblogs() {
                             return <>
                                 <BlogCard blogId={b.id} key={b.id} publishDate={b.createdAt.toString().substring(0, 10)} authorname={b.authorName} title={b.title} content={b.content} />
                                 <div className="flex justify-around w-full sm:w-4/5 lg:w-3/5 xl:w-2/5">
-                                    <button className="w-24 py-2 bg-red-800 text-white font-bold">Delete</button>
+                                    <button onClick={async () => {
+                                        try {
+                                            const res = await axios.delete(`${BACKEND_URL}/api/v1/user/blog/${b.id}`, {
+                                                headers: {
+                                                    Authorization: localStorage.getItem("mediumBlog_token")
+                                                }
+                                            })
+                                            alert(res.data.message)
+                                            window.location.href = `/myblogs`
+                                        } catch (e) {
+                                            if (axios.isAxiosError(e)) {
+                                                alert(e.response?.data.message)
+                                            } else {
+                                                alert("Unable to delete post")
+                                            }
+                                        }
+                                    }} className="w-24 py-2 bg-red-800 text-white font-bold">Delete</button>
                                     <button className="py-2 w-24 bg-green-800 text-white font-bold">Edit</button>
                                 </div>
                             </>
