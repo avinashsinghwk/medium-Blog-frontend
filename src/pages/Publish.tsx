@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 import { LoaderFullBlog } from "../components/LoaderFullBlog"
 import { useEffect } from "react"
+import { BtnLoader } from "../components/BtnLoader"
 
 export const Publish = () => {
     const navigate = useNavigate()
     const [authLoading, auth] = useAuth()
+    const [ispublishing, setIsPublishing] = useState<boolean>(false)
 
     useEffect(() => {
         if(auth == false && authLoading == false){
@@ -26,6 +28,7 @@ export const Publish = () => {
     
     const publishBtnClick = async () => {
         try {
+            setIsPublishing(true)
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/blog`, data, {
                 headers: {
                     Authorization: localStorage.getItem("mediumBlog_token")
@@ -39,6 +42,8 @@ export const Publish = () => {
             } else {
                 alert("Unable to create post")
             }
+        } finally{
+            setIsPublishing(false)
         }
     }
     if(authLoading){
@@ -72,7 +77,7 @@ export const Publish = () => {
                 </div>
 
                 <div>
-                    <button onClick={publishBtnClick} type="button" className=" text-white bg-blue-600 hover:bg-blue-800 font-bold rounded-lg text-base px-10 py-3  ">Publish</button>
+                    <button onClick={publishBtnClick} type="button" className=" text-white bg-blue-600 hover:bg-blue-800 font-bold rounded-lg text-base px-10 py-3 flex items-center justify-center">{ispublishing ? <BtnLoader /> : 'Publish'}</button>
                 </div>
             </div>
         </div>
